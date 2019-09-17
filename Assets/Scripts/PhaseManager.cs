@@ -40,7 +40,7 @@ public class PhaseManager : MonoBehaviour {
  
     private List<GameObject> spawnedNPCs;   // When you need to iterate over a number of agents.
     
-    private int currentMapState = 0;           // This stores which state the map or level is in.
+    private int currentMapState = -1;           // This stores which state the map or level is in.
     private int previousMapState = 0;          // The map state we were just in
 
     public int MapState => currentMapState;
@@ -56,12 +56,13 @@ public class PhaseManager : MonoBehaviour {
     // spawnedNPCs list. You can always add/remove NPCs later on.
 
     void Start() {
-        narrator.text = "This is the place to mention major things going on during the demo, the \"narration.\"";
+        // TODO add an intro here 
+        narrator.text = "This is the place to mention major things going on during the demo, the \"narration.\""; 
         spawnedNPCs = new List<GameObject>();
-        spawnedNPCs.Add(SpawnItem(spawner1, HunterPrefab, null, SpawnText1, 4));
+        //spawnedNPCs.Add(SpawnItem(spawner1, HunterPrefab, null, SpawnText1, 4));
 
-        Invoke("SpawnWolf", 12);
-        Invoke("Meeting1", 30);
+        //Invoke("SpawnWolf", 12);
+        //Invoke("Meeting1", 30);
     }
 
     /// <summary>
@@ -85,7 +86,7 @@ public class PhaseManager : MonoBehaviour {
                 {
                     previousMapState = currentMapState;
                     currentMapState = num;
-                }
+                } 
             }
         }
         
@@ -116,10 +117,11 @@ public class PhaseManager : MonoBehaviour {
 
     private void EnterMapStateZero()
     {
-        narrator.text = "In MapState Zero, we're going to ...";
+        narrator.text = "In MapState Zero, we're going to demonstrate dynamic evade.";
 
+        currentMapState = 0;
         //currentMapState = 2; // or whatever. Won't necessarily advance the phase every time
-
+        spawnedNPCs.Add(SpawnItem(spawner1, WolfPrefab, null, SpawnText1, 0));
         //spawnedNPCs.Add(SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 4));
     }
 
