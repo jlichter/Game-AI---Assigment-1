@@ -47,6 +47,21 @@ public class SteeringBehavior : MonoBehaviour {
         //wanderOrientation = agent.orientation;
     }
 
+    public Vector3 Seek() {
+        Vector3 direction = target.position - agent.position;
+        direction.Normalize();
+        direction *= maxAcceleration;
+        return direction;
+    }
+
+
+    public Vector3 Flee() {
+        Vector3 direction = target.position - agent.position;
+        direction.Normalize();
+        direction *= maxAcceleration;
+        return direction;
+    }
+
     /*
      * getSteering() calculates a surrogate target
      * and returns the target's position
@@ -107,6 +122,21 @@ public class SteeringBehavior : MonoBehaviour {
         //output the steering
         return steering;
 
+    }
+
+
+    private Vector3 orientationVector(float angle) {
+        return new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle));
+    }
+
+
+    public Vector3 Wander() {
+        wanderOrientation += (Random.value - Random.value) * wanderRate;
+        target.orientation = agent.orientation + wanderOrientation;
+        target.position = agent.position + orientationVector(agent.orientation) * wanderOffset;
+        target.position += orientationVector(target.orientation) * wanderRadius;
+        Vector3 steering = target.position - agent.position;
+        return steering.normalized * maxAcceleration;
     }
 
 }
