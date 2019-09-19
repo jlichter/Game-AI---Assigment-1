@@ -88,6 +88,10 @@ public class PhaseManager : MonoBehaviour {
                     currentMapState = num;
                 } 
             }
+       
+        }
+        else {
+            previousMapState = currentMapState;
         }
         
         // Check if a game event had caused a change of state in the level.
