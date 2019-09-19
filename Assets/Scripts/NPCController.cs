@@ -44,7 +44,7 @@ public class NPCController : MonoBehaviour {
                 if (label) {
                     // replace "First algorithm" with the name of the actual algorithm you're demoing
                     // do this for each phase
-                    label.text = name.Replace("(Clone)","") + "\nAlgorithm: First algorithm"; 
+                    label.text = name.Replace("(Clone)","") + "\nAlgorithm: dynamic evade algorithm"; 
                 }
                 linear = ai.Evade();
                 // linear = ai.Pursue();   // For example
@@ -56,9 +56,10 @@ public class NPCController : MonoBehaviour {
 
             case 2:
                 if (label) {
-                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Second algorithm";
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Pursue algorithm";
                 }
 
+                linear= ai.Pursue();
                 // linear = ai.whatever();  -- replace with the desired calls
                 // angular = ai.whatever();
                 break;

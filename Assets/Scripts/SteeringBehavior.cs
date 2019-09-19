@@ -44,6 +44,9 @@ public class SteeringBehavior : MonoBehaviour {
 
     protected void Start() {
         agent = GetComponent<NPCController>();
+        if(agent.gameObject.name == "Player") {
+            Debug.Log("got it");
+        }
         //wanderOrientation = agent.orientation;
     }
 

@@ -25,6 +25,9 @@ public class PhaseManager : MonoBehaviour {
     public GameObject RedPrefab;     // reserved for future use
     // public GameObject BluePrefab;    // reserved for future use
 
+    // you 
+    public NPCController PlayerNPC;
+
     public NPCController house;         // THis goes away
 
     // Set up to use spawn points. Can add more here, and also add them to the 
@@ -37,10 +40,12 @@ public class PhaseManager : MonoBehaviour {
     public Text SpawnText2;
     public GameObject spawner3;
     public Text SpawnText3;
+    public GameObject spawner4;
+    public Text SpawnText4;
  
     private List<GameObject> spawnedNPCs;   // When you need to iterate over a number of agents.
     
-    private int currentMapState = 0;           // This stores which state the map or level is in.
+    private int currentMapState = -1;           // This stores which state the map or level is in.
     private int previousMapState = 0;          // The map state we were just in
 
     public int MapState => currentMapState;
@@ -59,6 +64,7 @@ public class PhaseManager : MonoBehaviour {
         // TODO add an intro here 
         narrator.text = "This is the place to mention major things going on during the demo, the \"narration.\""; 
         spawnedNPCs = new List<GameObject>();
+        //PlayerNPC = PlayerPrefab.GetComponent<NPCController>();
         //spawnedNPCs.Add(SpawnItem(spawner1, HunterPrefab, null, SpawnText1, 4));
 
         //Invoke("SpawnWolf", 12);
@@ -129,13 +135,24 @@ public class PhaseManager : MonoBehaviour {
     private void EnterMapStateZero()
     {
         narrator.text = "In MapState Zero, we're going to demonstrate dynamic evade.";
-       // Debug.Log("its happening over and over again!");
-       // currentMapState = 0;
+        // Debug.Log("its happening over and over again!");
+        // currentMapState = 0;
         //currentMapState = 2; // or whatever. Won't necessarily advance the phase every time
-        spawnedNPCs.Add(SpawnItem(spawner1, WolfPrefab, null, SpawnText1, 1));
+        // NPCController temp_hunter = HunterPrefab.GetComponent<NPCController>();
+        // NPCController temp_wolf = WolfPrefab.GetComponent<NPCController>();
+        GameObject temp_hunter = HunterPrefab;
+        GameObject temp_wolf = WolfPrefab;
+        // Instantiate(temp_hunter);
+        // spawnedNPCs.Add(SpawnItem(spawner1, temp_wolf, null, SpawnText1, 1));
+        //temp_wolf = 
+        spawnedNPCs.Add(SpawnItem(spawner1, temp_wolf, null, SpawnText1, 1));
+        spawnedNPCs.Add(SpawnItem(spawner2, temp_hunter, spawnedNPCs[0].GetComponent<SteeringBehavior>().agent, SpawnText2, 2));
+      //  spawnedNPCs.Add(SpawnItem(spawner1, WolfPrefab, temp_hunter, SpawnText1, 1));
+      //  spawnedNPCs.Add(SpawnItem(spawner2, HunterPrefab, temp_wolf, SpawnText2, 2));
+
         //currentMapState = 0;
-        return;
-        StartCoroutine(Example());
+        //return;
+        //StartCoroutine(Example());
         //spawnedNPCs.Add(SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 4));
     }
 
