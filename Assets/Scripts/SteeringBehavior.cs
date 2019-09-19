@@ -124,6 +124,8 @@ public class SteeringBehavior : MonoBehaviour {
 
     }
 
+    
+
 
     private Vector3 orientationVector(float angle) {
         return new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle));

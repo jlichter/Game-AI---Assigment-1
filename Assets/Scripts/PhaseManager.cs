@@ -40,7 +40,7 @@ public class PhaseManager : MonoBehaviour {
  
     private List<GameObject> spawnedNPCs;   // When you need to iterate over a number of agents.
     
-    private int currentMapState = -1;           // This stores which state the map or level is in.
+    private int currentMapState = 0;           // This stores which state the map or level is in.
     private int previousMapState = 0;          // The map state we were just in
 
     public int MapState => currentMapState;
@@ -85,18 +85,21 @@ public class PhaseManager : MonoBehaviour {
                 if (num != currentMapState)
                 {
                     previousMapState = currentMapState;
+                    Debug.Log(previousMapState);
                     currentMapState = num;
+                    Debug.Log(currentMapState);
                 } 
             }
-       
-        }
-        else {
+        } else {
             previousMapState = currentMapState;
+           
         }
-        
+
         // Check if a game event had caused a change of state in the level.
-        if (currentMapState == previousMapState)
+        if (currentMapState == previousMapState) {
             return;
+        } 
+            
 
        // If we get here, we've been given a new map state, from either source
        switch (currentMapState) {
@@ -118,14 +121,21 @@ public class PhaseManager : MonoBehaviour {
             // ADD MORE CASES AS NEEDED
        }
     }
-
+    IEnumerator Example() {
+        print(Time.time);
+        yield return new WaitForSeconds(5);
+        print(Time.time);
+    }
     private void EnterMapStateZero()
     {
         narrator.text = "In MapState Zero, we're going to demonstrate dynamic evade.";
-
-        currentMapState = 0;
+       // Debug.Log("its happening over and over again!");
+       // currentMapState = 0;
         //currentMapState = 2; // or whatever. Won't necessarily advance the phase every time
-        spawnedNPCs.Add(SpawnItem(spawner1, WolfPrefab, null, SpawnText1, 0));
+        spawnedNPCs.Add(SpawnItem(spawner1, WolfPrefab, null, SpawnText1, 1));
+        //currentMapState = 0;
+        return;
+        StartCoroutine(Example());
         //spawnedNPCs.Add(SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 4));
     }
 

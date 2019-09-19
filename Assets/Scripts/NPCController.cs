@@ -40,13 +40,6 @@ public class NPCController : MonoBehaviour {
     /// </summary>
     void FixedUpdate() {
         switch (mapState) {
-            case 0:
-                if (label) {
-                    label.text = name.Replace("(Clone", "") + "\nAlgorithm: dynamic evade algorithm";
-                    
-                }
-                linear = ai.Evade();
-                break;
             case 1:
                 if (label) {
                     // replace "First algorithm" with the name of the actual algorithm you're demoing
