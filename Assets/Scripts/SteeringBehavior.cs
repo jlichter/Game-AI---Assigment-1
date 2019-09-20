@@ -43,6 +43,9 @@ public class SteeringBehavior : MonoBehaviour {
     public GameObject[] Path;
     public int current = 0;
 
+    // our variables 
+    public float pred;
+
     protected void Start() {
         agent = GetComponent<NPCController>();
         if(agent.gameObject.name == "Player") {
@@ -50,7 +53,7 @@ public class SteeringBehavior : MonoBehaviour {
         }
         //wanderOrientation = agent.orientation;
     }
-
+    // Patrick 
     public Vector3 Seek() {
         Vector3 direction = target.position - agent.position;
         direction.Normalize();
@@ -58,7 +61,7 @@ public class SteeringBehavior : MonoBehaviour {
         return direction;
     }
 
-
+    // Patrick 
     public Vector3 Flee() {
         Vector3 direction = agent.position - target.position;
         direction.Normalize();
@@ -70,6 +73,7 @@ public class SteeringBehavior : MonoBehaviour {
      * getSteering() calculates a surrogate target
      * and returns the target's position
      */
+     // Jessie 
     public Vector3 getSteering() {
         // work out the distance to target  
         Vector3 direction = target.position - agent.position;
@@ -87,6 +91,7 @@ public class SteeringBehavior : MonoBehaviour {
         } else {
             prediction = distance / speed;
         }
+        pred = prediction;
         // get target's new position 
         Vector3 targetPos = target.position + target.velocity * prediction;
 
@@ -97,6 +102,7 @@ public class SteeringBehavior : MonoBehaviour {
        direction from the character to the target and 
        requests a velocity along this line
      */
+     // Jessie 
     public Vector3 Pursue() {
 
         // call to getSteering()
@@ -106,6 +112,8 @@ public class SteeringBehavior : MonoBehaviour {
         // the velocity is along this direction, at full speed 
         steering.Normalize();
         steering *= maxAcceleration;
+        // for clarity
+        agent.DrawCircle(target.position + target.velocity * pred, 0.4f);
         //output the steering
         return steering;
 
@@ -115,6 +123,7 @@ public class SteeringBehavior : MonoBehaviour {
        direction from the character to the target and 
        requests a velocity in the opposite direction
      */
+     // Jessie 
     public Vector3 Evade() {
         // call to getSteering()
         Vector3 targetPosition = getSteering();
@@ -123,6 +132,8 @@ public class SteeringBehavior : MonoBehaviour {
         // the velocity is along this direction, at full speed 
         steering.Normalize();
         steering *= maxAcceleration;
+        // for clarity
+        agent.DrawCircle(target.position + target.velocity * pred, 0.4f);
         //output the steering
         return steering;
 
@@ -131,7 +142,7 @@ public class SteeringBehavior : MonoBehaviour {
      * but unlike pursue, Arrive() causes the agent to slow down as it arrives
      * exactly at the right location.
      */
-    
+    // Patrick and Jessie 
     public Vector3 Arrive() {
 
         // Create the structure to hold our output
@@ -176,7 +187,7 @@ public class SteeringBehavior : MonoBehaviour {
     /* Align() tries to match the orientation of the character with that of the target. 
      * It pays no attention to the position or velocity of the character or target. 
      */
-
+     // Jessie 
     public float Align() {
 
         // Create the structure to hold our output
@@ -228,7 +239,7 @@ public class SteeringBehavior : MonoBehaviour {
         return steering_angular;
 
     }
-
+    // Patrick 
     public float Face() {
 
         // Create the structure to hold our output

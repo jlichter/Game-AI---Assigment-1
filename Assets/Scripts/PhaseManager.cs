@@ -98,10 +98,18 @@ public class PhaseManager : MonoBehaviour {
                     
                     previousMapState = currentMapState;
                     currentMapState = num;
-                    // Debug.Log(previousMapState);
-                    //currentMapState = num;
-                    // Debug.Log(currentMapState);
-                    // clear the array of npcs spawned to demo next algorithm
+
+                    // reset text 
+                    FleeText.text = "";
+                    SeekText.text = "";
+                    EvadeText.text = "";
+                    PursueText.text = "";
+                    ArriveText.text = "";
+                    AlignText.text = "";
+                    FaceText.text = "";
+                    WanderText.text = "";
+                    SpinText.text = "";
+    
 
                 } 
             }
@@ -159,7 +167,7 @@ public class PhaseManager : MonoBehaviour {
      * 4 - align
      * 5 - face
      * 6 - wander
-     * 
+     * jessie and patrick 
      */
     private void EnterMapStateZero() // done, needs commenting 
     {
@@ -221,7 +229,7 @@ public class PhaseManager : MonoBehaviour {
         
     }
     private void EnterMapStateFive() {
-        narrator.text = "Entering MapState Five, demonstrating dynamic Align. The wolf spins and the hunter aligns to face same way.";
+        narrator.text = "Entering MapState Five, demonstrating dynamic Face. The wolf wanders and the hunter faces him.";
 
         currentMapState = 4;
         GameObject wolf = SpawnItem(spawner1, WolfPrefab, null, WanderText, 0);

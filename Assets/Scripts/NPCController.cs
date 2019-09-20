@@ -38,6 +38,7 @@ public class NPCController : MonoBehaviour {
     /// Depending on the phase the demo is in, have the agent do the appropriate steering.
     /// 
     /// </summary>
+    /// jessie and patrick 
     void FixedUpdate() {
         switch (mapState) {
             case 0:
