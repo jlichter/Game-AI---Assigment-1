@@ -82,7 +82,7 @@ public class NPCController : MonoBehaviour {
 
             case 4:
                 if (label) {
-                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Fourth algorithm";
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Flee algorithm";
                 }
 
                 linear = ai.Flee();  //-- replace with the desired calls

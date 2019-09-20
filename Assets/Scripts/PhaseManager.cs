@@ -40,7 +40,11 @@ public class PhaseManager : MonoBehaviour {
     public Text SpawnText3;
     public GameObject spawner4;
     public Text SpawnText4;
- 
+    public GameObject spawner5;
+    public Text SpawnText5;
+    public GameObject spawner6;
+    public Text SpawnText6;
+
     private List<GameObject> spawnedNPCs;   // When you need to iterate over a number of agents.
     
     private int currentMapState = -1;           // This stores which state the map or level is in.
@@ -57,24 +61,12 @@ public class PhaseManager : MonoBehaviour {
 
     // Use this for initialization. Create any initial NPCs here and store them in the 
     // spawnedNPCs list. You can always add/remove NPCs later on.
-    GameObject temp;
+
     
     void Start() {
         // TODO add an intro here 
         narrator.text = "This is the place to mention major things going on during the demo, the \"narration.\""; 
         spawnedNPCs = new List<GameObject>(10);
-        temp = new GameObject();
-        Debug.Log(spawnedNPCs.Count);
-        /*
-        spawnedNPCs.Add(temp); // index:0 pursuing hunter
-        spawnedNPCs.Add(temp); // index:1 evading wolf
-        spawnedNPCs.Add(temp); // index:2 arriving wolf
-        spawnedNPCs.Add(temp); // index:3 seeking hunter
-        spawnedNPCs.Add(temp); // index:4 fleeing wolf
-        spawnedNPCs.Add(temp); // index:5 aligning hunter
-        spawnedNPCs.Add(temp); // index:6 facing wolf
-        spawnedNPCs.Add(temp); // index:7 wandering hunter
-        */
         //spawnedNPCs.Add(SpawnItem(spawner1, HunterPrefab, null, SpawnText1, 4));
 
         //Invoke("SpawnWolf", 12);
