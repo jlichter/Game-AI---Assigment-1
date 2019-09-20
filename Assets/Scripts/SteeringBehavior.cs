@@ -127,9 +127,66 @@ public class SteeringBehavior : MonoBehaviour {
         return steering;
 
     }
-
     
+    
+    public Vector3 Arrive() {
 
+        // Create the structure to hold our output
+        Vector3 steering;
+
+        // get the direction to the target 
+        Vector3 direction = target.position - agent.position;
+        float distance = direction.magnitude;
+        
+        // Check if we are there, return no steering
+        if (distance < targetRadiusL) {
+            return Vector3.zero;
+        }
+
+        //  If we are outside the slowRadius, then go max speed
+        float targetSpeed;
+        if (distance > slowRadiusL) {
+            targetSpeed = maxSpeed;
+        } // Otherwise calculate a scaled speed
+        else {
+            targetSpeed = (maxSpeed * distance) / slowRadiusL;
+        }
+
+       // The target velocity combines speed and direction
+       Vector3 targetVelocity = direction;
+        targetVelocity.Normalize();
+        targetVelocity *= targetSpeed;
+
+        // Acceleration tries to get to the target velocity
+        steering = targetVelocity - agent.velocity;
+        steering = steering / timeToTarget;
+
+        // Check if the acceleration is too fast
+        if (steering.magnitude > maxAcceleration) {
+            steering.Normalize();
+            steering *= maxAcceleration; 
+        }
+
+        // output the steering 
+        return steering;
+    }
+    
+    /*
+    public Vector3 Align() {
+
+        // Create the structure to hold our output
+        Vector3 steering;
+
+        // Get the naive direction to the target
+        float rotation = target.orientation - agent.orientation;
+
+
+
+        // output the steering 
+        return steering;
+
+    }
+    */
 
     private Vector3 orientationVector(float angle) {
         return new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));

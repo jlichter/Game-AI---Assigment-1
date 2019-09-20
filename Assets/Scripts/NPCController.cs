@@ -98,6 +98,7 @@ public class NPCController : MonoBehaviour {
                 break;
 
                 // ADD CASES AS NEEDED
+                
         }
         UpdateMovement(linear, angular, Time.deltaTime);
         if (label) {
