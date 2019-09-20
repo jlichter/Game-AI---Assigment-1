@@ -66,18 +66,17 @@ public class NPCController : MonoBehaviour {
                     label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Pursue algorithm";
                 }
 
-                linear= ai.Pursue();
-                // linear = ai.whatever();  -- replace with the desired calls
-                // angular = ai.whatever();
+                linear = ai.Pursue();
+                angular = ai.Face();
                 break;
 
             case 3:
                 if (label) {
-                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Seek algorithm";
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: dyanamic Seek";
                 }
 
                 linear = ai.Seek();
-                // angular = ai.whatever();
+                angular = ai.Face();
                 break;
 
             case 4:
@@ -110,6 +109,12 @@ public class NPCController : MonoBehaviour {
                 }
                 linear = ai.Arrive();
                 DrawConcentricCircle(ai.slowRadiusL);
+                break;
+            case 8:
+                if (label) {
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: dynamic face";
+                }
+                angular = ai.Face();
                 break;
 
         }

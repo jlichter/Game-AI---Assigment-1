@@ -33,17 +33,20 @@ public class PhaseManager : MonoBehaviour {
     // a lot of agents dynamically, as with Flocking and Formation movement.
 
     public GameObject spawner1;
-    public Text SpawnText1;
+    public Text FleeText;
     public GameObject spawner2;
-    public Text SpawnText2;
+    public Text SeekText;
     public GameObject spawner3;
-    public Text SpawnText3;
+    public Text EvadeText;
     public GameObject spawner4;
-    public Text SpawnText4;
+    public Text PursueText;
     public GameObject spawner5;
-    public Text SpawnText5;
+    public Text ArriveText;
     public GameObject spawner6;
-    public Text SpawnText6;
+    public Text AlignText;
+    public Text FaceText;
+    public Text WanderText;
+    public Text SpinText;
 
     private List<GameObject> spawnedNPCs;   // When you need to iterate over a number of agents.
     
@@ -136,6 +139,9 @@ public class PhaseManager : MonoBehaviour {
             case 4:
                 EnterMapStateFour();
                 break;
+            case 5:
+                EnterMapStateFive();
+                break;
             case 6:
                 EnterMapStateSix();
                 break;
@@ -160,8 +166,8 @@ public class PhaseManager : MonoBehaviour {
         narrator.text = "In MapState Zero, we're going to demonstrate dynamic evade. The wolf evades" +
             " the hunter, who is pursuing.";
         currentMapState = 0;
-        GameObject temp_hunter = SpawnItem(spawner2, HunterPrefab, null, SpawnText2, 2);
-        GameObject wolf_evade = SpawnItem(spawner1, WolfPrefab, temp_hunter.GetComponent<NPCController>(), SpawnText1, 1);
+        GameObject temp_hunter = SpawnItem(spawner2, HunterPrefab, null, PursueText, 2);
+        GameObject wolf_evade = SpawnItem(spawner1, WolfPrefab, temp_hunter.GetComponent<NPCController>(), EvadeText, 1);
         temp_hunter.GetComponent<SteeringBehavior>().target = wolf_evade.GetComponent<NPCController>();
         spawnedNPCs.Add(temp_hunter);
         spawnedNPCs.Add(wolf_evade);
@@ -171,20 +177,22 @@ public class PhaseManager : MonoBehaviour {
 
     private void EnterMapStateOne() {
 
-        narrator.text = "In MapState One, we're going to demonstrate dynamic pursue with dynamic arrive";
-        // GameObject 
-       
-        //spawnedNPCs.Add(SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 4));
+        narrator.text = "In MapState One, we're going to demonstrate dynamic arrive";
+        currentMapState = 1;
+        GameObject wolf = SpawnItem(spawner1, WolfPrefab, null, null, -1);
+        GameObject hunter = SpawnItem(spawner2, HunterPrefab, wolf.GetComponent<NPCController>(), ArriveText, 7);
+        spawnedNPCs.Add(wolf);
+        spawnedNPCs.Add(hunter);
     }
 
     private void EnterMapStateTwo()
     {
-        narrator.text = "Entering MapState Two, demonstrating dynamic Seek";
+        narrator.text = "Entering MapState Two, demonstrating dynamic Seek and face";
 
         currentMapState = 2; // or whatever. Won't necessarily advance the phase every time
 
-        GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 0);
-        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText1, 3);
+        GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, WanderText, 0);
+        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SeekText, 3);
         spawnedNPCs.Add(wolf);
         spawnedNPCs.Add(hunter);
         
@@ -195,35 +203,40 @@ public class PhaseManager : MonoBehaviour {
 
         currentMapState = 3; // or whatever. Won't necessarily advance the phase every time
 
-        GameObject hunter = SpawnItem(spawner2, HunterPrefab, null, SpawnText2, 3);
-        GameObject wolf = SpawnItem(spawner1, WolfPrefab, hunter.GetComponent<NPCController>(), SpawnText2, 4);
+        GameObject hunter = SpawnItem(spawner2, HunterPrefab, null, SeekText, 3);
+        GameObject wolf = SpawnItem(spawner1, WolfPrefab, hunter.GetComponent<NPCController>(), FleeText, 4);
         hunter.GetComponent<SteeringBehavior>().target = wolf.GetComponent<NPCController>();
         spawnedNPCs.Add(wolf);
         spawnedNPCs.Add(hunter);
     }
     private void EnterMapStateFour() {
-        narrator.text = "Entering MapState Three, demonstrating dynamic Align. The wolf spins and the hunter aligns to face same way.";
+        narrator.text = "Entering MapState Four, demonstrating dynamic Align. The wolf spins and the hunter aligns to face same way.";
 
         currentMapState = 4; // or whatever. Won't necessarily advance the phase every time
-        GameObject wolf = SpawnItem(spawner1, WolfPrefab, null, SpawnText1, 5);
-        GameObject hunter = SpawnItem(spawner2, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText2, 6);
+        GameObject wolf = SpawnItem(spawner1, WolfPrefab, null, SpinText, 5);
+        GameObject hunter = SpawnItem(spawner2, HunterPrefab, wolf.GetComponent<NPCController>(), AlignText, 6);
         //currentMapState = 2; // or whatever. Won't necessarily advance the phase every time
         spawnedNPCs.Add(wolf);
         spawnedNPCs.Add(hunter);
         
     }
+    private void EnterMapStateFive() {
+        narrator.text = "Entering MapState Five, demonstrating dynamic Align. The wolf spins and the hunter aligns to face same way.";
+
+        currentMapState = 4;
+        GameObject wolf = SpawnItem(spawner1, WolfPrefab, null, WanderText, 0);
+        GameObject hunter = SpawnItem(spawner2, HunterPrefab, wolf.GetComponent<NPCController>(), FaceText, 8);
+        spawnedNPCs.Add(wolf);
+        spawnedNPCs.Add(hunter);
+
+    }
     private void EnterMapStateSix() {
         narrator.text = "Entering map state six, demonstrating dynamic wander";
         currentMapState = 6;
-        spawnedNPCs.Add(SpawnItem(spawner1, HunterPrefab, null, SpawnText1, 0));
+        spawnedNPCs.Add(SpawnItem(spawner1, HunterPrefab, null, WanderText, 0));
     }
     private void EnterMapStateSeven() {
-        narrator.text = "Entering map state six, demonstrating dynamic arrive";
-        currentMapState = 7;
-        GameObject wolf = SpawnItem(spawner1, WolfPrefab, null, SpawnText2, -1);
-        GameObject hunter = SpawnItem(spawner2, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText2, 7);
-        spawnedNPCs.Add(wolf);
-        spawnedNPCs.Add(hunter);
+        
     }
    
 
@@ -263,7 +276,7 @@ public class PhaseManager : MonoBehaviour {
     private void SpawnWolf()
     {
         narrator.text = "The Wolf appears. Most wolves are ferocious, but this one is docile.";
-        spawnedNPCs.Add(SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 4));
+        spawnedNPCs.Add(SpawnItem(spawner2, WolfPrefab, null, FleeText, 4));
     }
     private void Meeting1 ()
     {
