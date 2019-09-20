@@ -163,7 +163,7 @@ public class PhaseManager : MonoBehaviour {
     private void EnterMapStateZero() // done, needs commenting 
     {
         narrator.text = "In MapState Zero, we're going to demonstrate dynamic evade. The wolf evades" +
-            "the hunter, who is pursuing.";
+            " the hunter, who is pursuing.";
         currentMapState = 0;
         GameObject temp_hunter = SpawnItem(spawner2, HunterPrefab, null, SpawnText2, 2);
         GameObject wolf_evade = SpawnItem(spawner1, WolfPrefab, temp_hunter.GetComponent<NPCController>(), SpawnText1, 1);
@@ -207,7 +207,7 @@ public class PhaseManager : MonoBehaviour {
         spawnedNPCs.Add(hunter);
     }
     private void EnterMapStateFour() {
-        narrator.text = "Entering MapState Three, demonstrating dynamic Align";
+        narrator.text = "Entering MapState Three, demonstrating dynamic Align. The wolf spins and the hunter aligns to face same way.";
 
         currentMapState = 4; // or whatever. Won't necessarily advance the phase every time
         GameObject wolf = SpawnItem(spawner1, WolfPrefab, null, SpawnText1, 5);
