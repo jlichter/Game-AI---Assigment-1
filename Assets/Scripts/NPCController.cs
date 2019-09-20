@@ -40,6 +40,13 @@ public class NPCController : MonoBehaviour {
     /// </summary>
     void FixedUpdate() {
         switch (mapState) {
+            case 0:
+                if (label) {
+                    label.text = name.Replace("(Clone)", "") + "\nWandering...";
+                }
+                linear = ai.Wander(angular);
+                DrawCircle(ai.wanderCircleCenter, ai.wanderRadius);
+                break;
             case 1:
                 if (label) {
                     // replace "First algorithm" with the name of the actual algorithm you're demoing
@@ -69,7 +76,7 @@ public class NPCController : MonoBehaviour {
                     label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Third algorithm";
                 }
 
-                // linear = ai.whatever();  -- replace with the desired calls
+                linear = ai.Seek();
                 // angular = ai.whatever();
                 break;
 
@@ -78,7 +85,7 @@ public class NPCController : MonoBehaviour {
                     label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Fourth algorithm";
                 }
 
-                // linear = ai.whatever();  -- replace with the desired calls
+                linear = ai.Flee();  //-- replace with the desired calls
                 // angular = ai.whatever();
                 break;
             case 5:

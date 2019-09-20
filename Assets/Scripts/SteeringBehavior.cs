@@ -35,8 +35,9 @@ public class SteeringBehavior : MonoBehaviour {
     // For wander function
     public float wanderOffset;
     public float wanderRadius;
-    public float wanderRate;
+    public float wanderRate = 2;
     private float wanderOrientation;
+    public Vector3 wanderCircleCenter;
 
     // Holds the path to follow
     public GameObject[] Path;
@@ -59,7 +60,7 @@ public class SteeringBehavior : MonoBehaviour {
 
 
     public Vector3 Flee() {
-        Vector3 direction = target.position - agent.position;
+        Vector3 direction = agent.position - target.position;
         direction.Normalize();
         direction *= maxAcceleration;
         return direction;
@@ -131,16 +132,17 @@ public class SteeringBehavior : MonoBehaviour {
 
 
     private Vector3 orientationVector(float angle) {
-        return new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle));
+        return new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
     }
 
 
     public Vector3 Wander() {
         wanderOrientation += (Random.value - Random.value) * wanderRate;
-        target.orientation = agent.orientation + wanderOrientation;
-        target.position = agent.position + orientationVector(agent.orientation) * wanderOffset;
-        target.position += orientationVector(target.orientation) * wanderRadius;
-        Vector3 steering = target.position - agent.position;
+        float target_orientation = agent.orientation + wanderOrientation;
+        Vector3 target_position = agent.position + orientationVector(agent.orientation) * wanderOffset;
+        wanderCircleCenter = target_position;
+        target_position += orientationVector(target_orientation) * wanderRadius;
+        Vector3 steering = target_position - agent.position;        
         return steering.normalized * maxAcceleration;
     }
 

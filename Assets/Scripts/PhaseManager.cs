@@ -98,7 +98,6 @@ public class PhaseManager : MonoBehaviour {
             }
         } else {
             previousMapState = currentMapState;
-           
         }
 
         // Check if a game event had caused a change of state in the level.
@@ -106,7 +105,10 @@ public class PhaseManager : MonoBehaviour {
             return;
         } 
             
-
+       foreach(GameObject go in spawnedNPCs) {
+            Destroy(go);
+       }
+       spawnedNPCs.Clear();
        // If we get here, we've been given a new map state, from either source
        switch (currentMapState) {
            case 0:
@@ -122,8 +124,11 @@ public class PhaseManager : MonoBehaviour {
                break;
 
            case 3:
+                EnterMapStateThree();
                break;
-
+           case 6:
+                EnterMapStateSix();
+                break;
             // ADD MORE CASES AS NEEDED
        }
     }
@@ -147,13 +152,6 @@ public class PhaseManager : MonoBehaviour {
         //temp_wolf = 
         spawnedNPCs.Add(SpawnItem(spawner1, temp_wolf, null, SpawnText1, 1));
         spawnedNPCs.Add(SpawnItem(spawner2, temp_hunter, spawnedNPCs[0].GetComponent<SteeringBehavior>().agent, SpawnText2, 2));
-      //  spawnedNPCs.Add(SpawnItem(spawner1, WolfPrefab, temp_hunter, SpawnText1, 1));
-      //  spawnedNPCs.Add(SpawnItem(spawner2, HunterPrefab, temp_wolf, SpawnText2, 2));
-
-        //currentMapState = 0;
-        //return;
-        //StartCoroutine(Example());
-        //spawnedNPCs.Add(SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 4));
     }
 
     private void EnterMapStateOne() {
@@ -166,19 +164,32 @@ public class PhaseManager : MonoBehaviour {
 
     private void EnterMapStateTwo()
     {
-        narrator.text = "Entering MapState Two";
-
-        currentMapState = 3; // or whatever. Won't necessarily advance the phase every time
-
-        //spawnedNPCs.Add(SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 4));
-    }
-    private void EnterMapStateThree()
-    {
-        narrator.text = "Entering MapState Three";
+        narrator.text = "Entering MapState Two, demonstrating dynamic Seek";
 
         currentMapState = 2; // or whatever. Won't necessarily advance the phase every time
 
-        //spawnedNPCs.Add(SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 4));
+        GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 0);
+        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText1, 3);
+        spawnedNPCs.Add(wolf);
+        spawnedNPCs.Add(hunter);
+        
+    }
+    private void EnterMapStateThree()
+    {
+        narrator.text = "Entering MapState Three, demonstrating dynamic Flee";
+
+        currentMapState = 3; // or whatever. Won't necessarily advance the phase every time
+
+        GameObject hunter = SpawnItem(spawner2, HunterPrefab, null, SpawnText2, 3);
+        GameObject wolf = SpawnItem(spawner1, WolfPrefab, hunter.GetComponent<NPCController>(), SpawnText2, 4);
+        hunter.GetComponent<SteeringBehavior>().target = wolf.GetComponent<NPCController>();
+        spawnedNPCs.Add(wolf);
+        spawnedNPCs.Add(hunter);
+    }
+    private void EnterMapStateSix() {
+        narrator.text = "Entering map state six, demonstrating dynamic wander";
+        currentMapState = 6;
+        spawnedNPCs.Add(SpawnItem(spawner1, HunterPrefab, null, SpawnText1, 0));
     }
 
 
