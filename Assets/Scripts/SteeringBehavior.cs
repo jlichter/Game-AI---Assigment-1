@@ -135,7 +135,10 @@ public class SteeringBehavior : MonoBehaviour {
         return steering;
 
     }
-    
+    /* Arrive() causes the agent to move towards the target, like pursue.
+     * but unlike pursue, Arrive() causes the agent to slow down as it arrives
+     * exactly at the right location.
+     */
     
     public Vector3 Arrive() {
 
@@ -178,8 +181,10 @@ public class SteeringBehavior : MonoBehaviour {
         // output the steering 
         return steering;
     }
-    
-    
+    /* Align() tries to match the orientation of the character with that of the target. 
+     * It pays no attention to the position or velocity of the character or target. 
+     */
+
     public float Align() {
 
         // Create the structure to hold our output
