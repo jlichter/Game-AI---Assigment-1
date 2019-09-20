@@ -104,6 +104,13 @@ public class NPCController : MonoBehaviour {
                 }
                 angular = ai.Align();
                 break;
+            case 7:
+                if (label) {
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: dynamic arrive";
+                }
+                linear = ai.Arrive();
+                DrawConcentricCircle(ai.slowRadiusL);
+                break;
 
         }
         UpdateMovement(linear, angular, Time.deltaTime);

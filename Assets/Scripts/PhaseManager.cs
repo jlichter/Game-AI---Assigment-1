@@ -147,8 +147,11 @@ public class PhaseManager : MonoBehaviour {
             case 6:
                 EnterMapStateSix();
                 break;
-            // ADD MORE CASES AS NEEDED
-       }
+            case 7:
+                EnterMapStateSeven();
+                break;
+                // ADD MORE CASES AS NEEDED
+        }
     }
     /* map states :
      * 0 - evade 
@@ -221,6 +224,14 @@ public class PhaseManager : MonoBehaviour {
         narrator.text = "Entering map state six, demonstrating dynamic wander";
         currentMapState = 6;
         spawnedNPCs.Add(SpawnItem(spawner1, HunterPrefab, null, SpawnText1, 0));
+    }
+    private void EnterMapStateSeven() {
+        narrator.text = "Entering map state six, demonstrating dynamic arrive";
+        currentMapState = 7;
+        GameObject wolf = SpawnItem(spawner1, WolfPrefab, null, SpawnText2, -1);
+        GameObject hunter = SpawnItem(spawner2, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText2, 7);
+        spawnedNPCs.Add(wolf);
+        spawnedNPCs.Add(hunter);
     }
    
 

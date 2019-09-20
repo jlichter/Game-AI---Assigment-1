@@ -43,9 +43,6 @@ public class SteeringBehavior : MonoBehaviour {
     public GameObject[] Path;
     public int current = 0;
 
-    // we put in 
-    public float pred;
-
     protected void Start() {
         agent = GetComponent<NPCController>();
         if(agent.gameObject.name == "Player") {
@@ -90,7 +87,6 @@ public class SteeringBehavior : MonoBehaviour {
         } else {
             prediction = distance / speed;
         }
-        pred = prediction;
         // get target's new position 
         Vector3 targetPos = target.position + target.velocity * prediction;
 
@@ -110,8 +106,6 @@ public class SteeringBehavior : MonoBehaviour {
         // the velocity is along this direction, at full speed 
         steering.Normalize();
         steering *= maxAcceleration;
-        // draw circle for clarity 
-        agent.DrawCircle(target.position + target.velocity * pred, 0.4f);
         //output the steering
         return steering;
 
@@ -129,8 +123,6 @@ public class SteeringBehavior : MonoBehaviour {
         // the velocity is along this direction, at full speed 
         steering.Normalize();
         steering *= maxAcceleration;
-        // draw circle for clarity 
-        agent.DrawCircle(target.position + target.velocity * pred, 0.4f);
         //output the steering
         return steering;
 
@@ -145,15 +137,15 @@ public class SteeringBehavior : MonoBehaviour {
         // get the direction to the target 
         Vector3 direction = target.position - agent.position;
         float distance = direction.magnitude;
-        
+        float targetSpeed;
         // Check if we are there, return no steering
-        if (distance < targetRadiusL) {
-            return Vector3.zero;
-        }
 
         //  If we are outside the slowRadius, then go max speed
-        float targetSpeed;
-        if (distance > slowRadiusL) {
+        if (distance < targetRadiusL) {
+            //return Vector3.zero;
+            targetSpeed = 0;
+        }
+        else if (distance > slowRadiusL) {
             targetSpeed = maxSpeed;
         } // Otherwise calculate a scaled speed
         else {
