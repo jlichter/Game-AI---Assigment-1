@@ -43,6 +43,9 @@ public class SteeringBehavior : MonoBehaviour {
     public GameObject[] Path;
     public int current = 0;
 
+    // we put in 
+    public float pred;
+
     protected void Start() {
         agent = GetComponent<NPCController>();
         if(agent.gameObject.name == "Player") {
@@ -87,6 +90,7 @@ public class SteeringBehavior : MonoBehaviour {
         } else {
             prediction = distance / speed;
         }
+        pred = prediction;
         // get target's new position 
         Vector3 targetPos = target.position + target.velocity * prediction;
 
@@ -106,6 +110,8 @@ public class SteeringBehavior : MonoBehaviour {
         // the velocity is along this direction, at full speed 
         steering.Normalize();
         steering *= maxAcceleration;
+        // draw circle for clarity 
+        agent.DrawCircle(target.position + target.velocity * pred, 0.4f);
         //output the steering
         return steering;
 
@@ -123,6 +129,8 @@ public class SteeringBehavior : MonoBehaviour {
         // the velocity is along this direction, at full speed 
         steering.Normalize();
         steering *= maxAcceleration;
+        // draw circle for clarity 
+        agent.DrawCircle(target.position + target.velocity * pred, 0.4f);
         //output the steering
         return steering;
 
