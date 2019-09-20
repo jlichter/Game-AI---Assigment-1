@@ -44,7 +44,7 @@ public class NPCController : MonoBehaviour {
                 if (label) {
                     label.text = name.Replace("(Clone)", "") + "\nWandering...";
                 }
-                linear = ai.Wander();
+                linear = ai.Wander(out angular);
                 DrawCircle(ai.wanderCircleCenter, ai.wanderRadius);
                 break;
             case 1:
@@ -100,7 +100,7 @@ public class NPCController : MonoBehaviour {
             // ADD CASES AS NEEDED
             case 6:
                 if (label) {
-                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Spinning";
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Aligning";
                 }
                 angular = ai.Align();
                 break;

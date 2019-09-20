@@ -34,8 +34,8 @@ public class SteeringBehavior : MonoBehaviour {
 
     // For wander function
     public float wanderOffset;
-    public float wanderRadius;
-    public float wanderRate = 2;
+    public float wanderRadius = 100;
+    public float wanderRate = 20;
     private float wanderOrientation;
     public Vector3 wanderCircleCenter;
 
@@ -230,13 +230,19 @@ public class SteeringBehavior : MonoBehaviour {
     }
 
 
-    public Vector3 Wander() {
+    public Vector3 Wander(out float angular) {
         wanderOrientation += (Random.value - Random.value) * wanderRate;
         float target_orientation = agent.orientation + wanderOrientation;
         Vector3 target_position = agent.position + orientationVector(agent.orientation) * wanderOffset;
         wanderCircleCenter = target_position;
         target_position += orientationVector(target_orientation) * wanderRadius;
-        Vector3 steering = target_position - agent.position;        
+        Vector3 steering = target_position - agent.position;
+        if(target == null) {
+            target = new NPCController();
+        }
+
+        target.orientation = Mathf.Atan2(steering.x, steering.z);
+        angular = Align();
         return steering.normalized * maxAcceleration;
     }
 
