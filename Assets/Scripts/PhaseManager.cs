@@ -141,7 +141,10 @@ public class PhaseManager : MonoBehaviour {
            case 3:
                 EnterMapStateThree();
                break;
-           case 6:
+            case 4:
+                EnterMapStateFour();
+                break;
+            case 6:
                 EnterMapStateSix();
                 break;
             // ADD MORE CASES AS NEEDED
@@ -157,28 +160,25 @@ public class PhaseManager : MonoBehaviour {
      * 6 - wander
      * 
      */
-    private void EnterMapStateZero()
+    private void EnterMapStateZero() // done, needs commenting 
     {
         narrator.text = "In MapState Zero, we're going to demonstrate dynamic evade. The wolf evades" +
             "the hunter, who is pursuing.";
-        // 
-        GameObject temp_hunter = HunterPrefab;
-        //GameObject temp_wolf = WolfPrefab;
-        GameObject wolf_evade = WolfPrefab;
-        Debug.Log(spawnedNPCs.Count);
-        spawnedNPCs[0] = SpawnItem(spawner2, temp_hunter, null, SpawnText2, 2);
-        spawnedNPCs[1] = SpawnItem(spawner1, wolf_evade, spawnedNPCs[0], SpawnText1, 1);
-        spawnedNPCs[0].GetComponent<SteeringBehavior>().target = spawnedNPCs[1].GetComponent<SteeringBehavior>().agent;
-        
+        currentMapState = 0;
+        GameObject temp_hunter = SpawnItem(spawner2, HunterPrefab, null, SpawnText2, 2);
+        GameObject wolf_evade = SpawnItem(spawner1, WolfPrefab, temp_hunter.GetComponent<NPCController>(), SpawnText1, 1);
+        temp_hunter.GetComponent<SteeringBehavior>().target = wolf_evade.GetComponent<NPCController>();
+        spawnedNPCs.Add(temp_hunter);
+        spawnedNPCs.Add(wolf_evade);
+      
+
     }
 
     private void EnterMapStateOne() {
 
         narrator.text = "In MapState One, we're going to demonstrate dynamic pursue with dynamic arrive";
-       // GameObject 
-
-        //currentMapState = 2; // or whatever. Won't necessarily advance the phase every time
-
+        // GameObject 
+       
         //spawnedNPCs.Add(SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 4));
     }
 
@@ -206,11 +206,23 @@ public class PhaseManager : MonoBehaviour {
         spawnedNPCs.Add(wolf);
         spawnedNPCs.Add(hunter);
     }
+    private void EnterMapStateFour() {
+        narrator.text = "Entering MapState Three, demonstrating dynamic Align";
+
+        currentMapState = 4; // or whatever. Won't necessarily advance the phase every time
+        GameObject wolf = SpawnItem(spawner1, WolfPrefab, null, SpawnText1, 5);
+        GameObject hunter = SpawnItem(spawner2, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText2, 6);
+        //currentMapState = 2; // or whatever. Won't necessarily advance the phase every time
+        spawnedNPCs.Add(wolf);
+        spawnedNPCs.Add(hunter);
+        
+    }
     private void EnterMapStateSix() {
         narrator.text = "Entering map state six, demonstrating dynamic wander";
         currentMapState = 6;
         spawnedNPCs.Add(SpawnItem(spawner1, HunterPrefab, null, SpawnText1, 0));
     }
+   
 
 
     // ... Etc. Etc.
